@@ -11,19 +11,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+import { useCounter } from '@/composables/useCounter';
 
 export default defineComponent({
-    props: {
-        value: { type: Number, required: true },
-    },
-    setup(props) {
-        const counter = ref(props.value);
-        const squareCounter = computed(() => counter.value * counter.value);
+    setup() {
+        const { counter, squareCounter } = useCounter();
 
         return {
             counter,
-            squareCounter,
+            squareCounter
         }
     }
 })
