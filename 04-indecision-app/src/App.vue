@@ -1,5 +1,5 @@
 <template>
-    <IndecisionView />
+  <IndecisionView />
 </template>
 
 <script lang="ts" setup>
