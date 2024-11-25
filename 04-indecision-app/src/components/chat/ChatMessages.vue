@@ -10,13 +10,13 @@
         :image="message.image"
       /> -->
       <ChatBubble v-for="message in messages" :key="message.id" v-bind="message" />
-      {{ messages.length }}
+      <!-- {{ messages.length }} -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import type { ChatMessage } from '@/interfaces/chat-message.interface';
 import ChatBubble from './ChatBubble.vue';
 
@@ -28,11 +28,14 @@ const { messages } = defineProps<Props>();
 
 const chatRef = ref<HTMLDivElement | null>(null);
 
-watch(messages, () => {
+watchEffect(() => {
   console.log('Messages changed:', messages.length);
-  chatRef.value?.scrollTo({
-    top: chatRef.value.scrollHeight,
-    behavior: 'smooth',
-  });
+  setTimeout(() => {
+    chatRef.value?.scrollTo({
+      top: chatRef.value.scrollHeight,
+      behavior: 'smooth',
+    });
+    console.log(chatRef?.value?.scrollHeight);
+  }, 100);
 });
 </script>
