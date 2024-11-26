@@ -17,7 +17,6 @@
       >
         ¿Jugar de nuevo?
       </button>
-      {{ gameStatus }}
     </div>
 
     <!-- Pokemon Picture -->
