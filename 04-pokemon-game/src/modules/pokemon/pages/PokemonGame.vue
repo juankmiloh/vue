@@ -9,14 +9,30 @@
 
   <section v-else class="flex flex-col justify-center items-center w-screen h-screen">
     <h1 class="m-5">¿Quién es este pokemón?</h1>
-    <h3>{{ randomPokemon }}</h3>
+    <div class="h-20">
+      <button
+        v-if="gameStatus !== GameStatus.Playing"
+        @click="getNextRound(4)"
+        class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 transition-all"
+      >
+        ¿Jugar de nuevo?
+      </button>
+      {{ gameStatus }}
+    </div>
+
     <!-- Pokemon Picture -->
     <PokemonPicture
       :pokemon-id="randomPokemon.id"
-      :show-pokemon="gameStatus !== GameStatus.playing"
+      :show-pokemon="gameStatus !== GameStatus.Playing"
     />
+
     <!-- Pokemon Options -->
-    <PokemonOptions :options="options" @selected-option="onSelectedOption" />
+    <PokemonOptions
+      :options="options"
+      :block-selection="gameStatus !== GameStatus.Playing"
+      :correct-answer="randomPokemon.id"
+      @selected-option="checkAnswer"
+    />
   </section>
 </template>
 
@@ -26,9 +42,12 @@ import PokemonPicture from '../components/PokemonPicture.vue'
 import { usePokemonGame } from '../composables/usePokemonGame'
 import { GameStatus } from '../interfaces'
 
-const { randomPokemon, isLoading, gameStatus, pokemonsOptions: options } = usePokemonGame()
-
-const onSelectedOption = (value: number) => {
-  console.log('value', { value })
-}
+const {
+  randomPokemon,
+  isLoading,
+  gameStatus,
+  pokemonsOptions: options,
+  checkAnswer,
+  getNextRound,
+} = usePokemonGame()
 </script>

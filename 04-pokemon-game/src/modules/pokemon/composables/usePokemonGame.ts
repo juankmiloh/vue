@@ -1,9 +1,10 @@
 import { computed, onMounted, ref } from 'vue'
 import { GameStatus, type Pokemon, type PokemonListResponse } from '../interfaces'
 import { pokemonApi } from '../api/pokemonApi'
+import confetti from 'canvas-confetti'
 
 export const usePokemonGame = () => {
-  const gameStatus = ref<GameStatus>(GameStatus.playing)
+  const gameStatus = ref<GameStatus>(GameStatus.Playing)
   const pokemons = ref<Pokemon[]>([])
   const pokemonsOptions = ref<Pokemon[]>([])
 
@@ -27,15 +28,30 @@ export const usePokemonGame = () => {
     return pokemonsArray.sort(() => Math.random() - 0.5) // Se ordena el arreglo de manera aleatoria
   }
 
-  const getNextOptions = (howMany: number = 4) => {
-    gameStatus.value = GameStatus.playing
+  const getNextRound = (howMany: number = 4) => {
+    gameStatus.value = GameStatus.Playing
     pokemonsOptions.value = pokemons.value.slice(0, howMany)
     pokemons.value = pokemons.value.slice(howMany)
   }
 
+  const checkAnswer = (id: number) => {
+    const hasWon = (randomPokemon.value.id = id)
+    if (hasWon) {
+      gameStatus.value = GameStatus.Won
+      confetti({
+        particleCount: 300,
+        spread: 150,
+        origin: { y: 0.6 },
+      })
+      return
+    }
+
+    gameStatus.value = GameStatus.Lost
+  }
+
   onMounted(async () => {
     pokemons.value = await getPokemons()
-    getNextOptions()
+    getNextRound()
     console.log('pokemonsOptions', pokemonsOptions.value)
   })
 
@@ -46,6 +62,7 @@ export const usePokemonGame = () => {
     randomPokemon,
 
     // Methods
-    getNextOptions,
+    getNextRound,
+    checkAnswer,
   }
 }
