@@ -35,7 +35,7 @@ export const usePokemonGame = () => {
   }
 
   const checkAnswer = (id: number) => {
-    const hasWon = (randomPokemon.value.id = id)
+    const hasWon = randomPokemon.value.id === id
     if (hasWon) {
       gameStatus.value = GameStatus.Won
       confetti({
