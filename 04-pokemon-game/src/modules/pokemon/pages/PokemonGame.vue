@@ -46,7 +46,7 @@ const {
   randomPokemon,
   isLoading,
   gameStatus,
-  pokemonsOptions: options,
+  pokemonOptions: options,
   checkAnswer,
   getNextRound,
 } = usePokemonGame()

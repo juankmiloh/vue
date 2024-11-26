@@ -6,11 +6,11 @@ import confetti from 'canvas-confetti'
 export const usePokemonGame = () => {
   const gameStatus = ref<GameStatus>(GameStatus.Playing)
   const pokemons = ref<Pokemon[]>([])
-  const pokemonsOptions = ref<Pokemon[]>([])
+  const pokemonOptions = ref<Pokemon[]>([])
 
   const randomPokemon = computed(() => {
-    const randomIndex = Math.floor(Math.random() * pokemonsOptions.value.length)
-    return pokemonsOptions.value[randomIndex]
+    const randomIndex = Math.floor(Math.random() * pokemonOptions.value.length)
+    return pokemonOptions.value[randomIndex]
   })
   const isLoading = computed(() => pokemons.value.length === 0)
 
@@ -30,7 +30,7 @@ export const usePokemonGame = () => {
 
   const getNextRound = (howMany: number = 4) => {
     gameStatus.value = GameStatus.Playing
-    pokemonsOptions.value = pokemons.value.slice(0, howMany)
+    pokemonOptions.value = pokemons.value.slice(0, howMany)
     pokemons.value = pokemons.value.slice(howMany)
   }
 
@@ -52,13 +52,13 @@ export const usePokemonGame = () => {
   onMounted(async () => {
     pokemons.value = await getPokemons()
     getNextRound()
-    console.log('pokemonsOptions', pokemonsOptions.value)
+    console.log('pokemonsOptions', pokemonOptions.value)
   })
 
   return {
     gameStatus,
     isLoading,
-    pokemonsOptions,
+    pokemonOptions,
     randomPokemon,
 
     // Methods

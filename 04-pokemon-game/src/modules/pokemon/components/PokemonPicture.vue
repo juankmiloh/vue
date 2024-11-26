@@ -8,12 +8,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface props {
+interface Props {
   pokemonId: number
   showPokemon?: boolean
 }
 
-const props = withDefaults(defineProps<props>(), {
+const props = withDefaults(defineProps<Props>(), {
   showPokemon: false,
 })
 
