@@ -53,8 +53,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const onLogin = () => {
   localStorage.setItem('userId', 'ABC-123')
-  router.replace({
-    name: 'home',
-  })
+
+  const lastPath = localStorage.getItem('lastPath') ?? '/'
+  // router.replace({
+  //   name: 'home',
+  // })
+
+  router.replace(lastPath)
 }
 </script>
